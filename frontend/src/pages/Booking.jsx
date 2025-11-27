@@ -60,10 +60,34 @@ export default function Booking() {
 
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        navigate('/confirmation', { state: formData });
+
+        try {
+            const response = await fetch("http://localhost:3000/api/bookings", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                console.log("Booking saved:", data);
+                navigate("/confirmation", { state: formData });
+            } else {
+                alert(data.message || "Something went wrong.");
+            }
+
+        } catch (error) {
+            console.error("POST Error:", error);
+            alert("Server unreachable. Try again later.");
+        }
     };
+
+
 
     return (
         <>
@@ -143,7 +167,7 @@ export default function Booking() {
                                             value={formData.phone}
                                             onChange={handleChange}
                                             className="w-full bg-transparent border-b border-white/20 py-2 text-luxury-ivory focus:outline-none focus:border-luxury-gold transition-colors"
-                                            placeholder="+1 (555) 000-0000"
+                                            placeholder="+91 XXXXXXXXXX"
                                             required
                                         />
                                     </div>
