@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ParallaxHero from '../components/ParallaxHero';
+import BookingWidget from '../components/BookingWidget';
 import { gsap } from 'gsap';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -19,10 +20,15 @@ export default function Overview() {
     e.preventDefault();
     const target = document.querySelector(targetId);
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-      });
+      const smoother = ScrollSmoother.get();
+      if (smoother) {
+        smoother.scrollTo(target, true, "top top");
+      } else {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
       // Show back-to-top button immediately after scrolling to section
       setTimeout(() => {
         setShowBackToTop(window.scrollY > 500);
@@ -32,10 +38,15 @@ export default function Overview() {
 
   // Scroll to top handler
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
+    const smoother = ScrollSmoother.get();
+    if (smoother) {
+      smoother.scrollTo(0, true);
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
   };
 
   useEffect(() => {
@@ -73,44 +84,19 @@ export default function Overview() {
 
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <div className="min-h-screen bg-luxury-ivory">
+          <div className="min-h-screen bg-black">
 
-            {/* Parallax Hero Section */}
+            {/* Parallax Hero Section with Booking Widget */}
             <ParallaxHero
               backgroundImage="/hero-rooftop.jpg"
-              logo="/logo.png"
-              title="THE HOLLYWOOD"
+              title="Explore The Hollywood"
               subtitle="Where skyline whispers meet curated cocktails. Mumbai's elevated escape."
             >
-              <div className="flex items-center justify-center space-x-4 text-xs tracking-[0.25em] uppercase mt-8" style={{ fontWeight: 300 }}>
-                <a
-                  href="#hours"
-                  onClick={(e) => handleSmoothScroll(e, '#hours')}
-                  className="hover:text-luxury-gold transition-colors duration-300 cursor-pointer"
-                >
-                  Hours
-                </a>
-                <span className="text-luxury-gold">—</span>
-                <a
-                  href="#menus"
-                  onClick={(e) => handleSmoothScroll(e, '#menus')}
-                  className="hover:text-luxury-gold transition-colors duration-300 cursor-pointer"
-                >
-                  Menus
-                </a>
-                <span className="text-luxury-gold">—</span>
-                <a
-                  href="#events"
-                  onClick={(e) => handleSmoothScroll(e, '#events')}
-                  className="hover:text-luxury-gold transition-colors duration-300 cursor-pointer"
-                >
-                  Events
-                </a>
-              </div>
+              <BookingWidget />
             </ParallaxHero>
 
             {/* Reservation Section */}
-            <section className="section-luxury bg-luxury-ivory">
+            <section className="section-luxury bg-black">
               <div className="container-luxury">
                 <div className="max-w-5xl mx-auto">
                   <div className="glass-card rounded-3xl p-10 md:p-12 border border-luxury-gold/20" style={{ boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)' }}>
@@ -118,7 +104,7 @@ export default function Overview() {
                     <div className="w-16 h-0.5 mx-auto mb-8" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
                     <form onSubmit={handleSubmit} className="flex flex-wrap gap-6 items-end justify-center">
                       <div className="flex flex-col flex-1 min-w-[140px]">
-                        <label htmlFor="people" className="text-xs tracking-[0.2em] text-luxury-charcoal/70 mb-3 uppercase font-medium">Guests</label>
+                        <label htmlFor="people" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Guests</label>
                         <select
                           id="people"
                           value={people}
@@ -134,7 +120,7 @@ export default function Overview() {
                         </select>
                       </div>
                       <div className="flex flex-col flex-1 min-w-[140px]">
-                        <label htmlFor="time" className="text-xs tracking-[0.2em] text-luxury-charcoal/70 mb-3 uppercase font-medium">Time</label>
+                        <label htmlFor="time" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Time</label>
                         <select
                           id="time"
                           value={time}
@@ -150,7 +136,7 @@ export default function Overview() {
                         </select>
                       </div>
                       <div className="flex flex-col flex-1 min-w-[160px]">
-                        <label htmlFor="date" className="text-xs tracking-[0.2em] text-luxury-charcoal/70 mb-3 uppercase font-medium">Date</label>
+                        <label htmlFor="date" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Date</label>
                         <input
                           type="text"
                           id="date"
@@ -173,10 +159,10 @@ export default function Overview() {
             </section>
 
             {/* Description */}
-            <section className="section-luxury bg-white" style={{ scrollSnapAlign: 'start' }}>
+            <section className="section-luxury bg-black" style={{ scrollSnapAlign: 'start' }}>
               <div className="container-luxury">
                 <div className="max-w-3xl mx-auto text-center fade-in">
-                  <p className="text-luxury-charcoal/80 text-xl leading-relaxed font-light">
+                  <p className="text-white/80 text-xl leading-relaxed font-light">
                     Mumbai's chic open-air rooftop bar offers innovative cocktails and premier wine selections, with a scenic
                     view of the bay. Find yourself with a relaxed sundowner in the early evenings or come when the music's pace
                     matches the level of service.
@@ -186,7 +172,7 @@ export default function Overview() {
             </section>
 
             {/* Hours Section */}
-            <section id="hours" className="section-luxury bg-white">
+            <section id="hours" className="section-luxury bg-black">
               <div className="container-luxury">
                 <div className="max-w-4xl mx-auto">
                   <p className="section-subtitle">OPENING HOURS</p>
@@ -194,16 +180,16 @@ export default function Overview() {
                   <div className="w-24 h-0.5 mx-auto mb-12" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
                   <div className="space-y-6">
                     <div className="flex justify-between py-6 border-b" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-luxury-charcoal">DAILY</span>
-                      <span className="text-sm tracking-wider text-luxury-charcoal/70">5:00 PM – 1:30 AM</span>
+                      <span className="text-sm tracking-[0.2em] font-medium text-white">DAILY</span>
+                      <span className="text-sm tracking-wider text-white/70">5:00 PM – 1:30 AM</span>
                     </div>
                     <div className="flex justify-between py-6 border-b" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-luxury-charcoal">SUNDAY BRUNCH</span>
-                      <span className="text-sm tracking-wider text-luxury-charcoal/70">12:30 PM – 5:00 PM</span>
+                      <span className="text-sm tracking-[0.2em] font-medium text-white">SUNDAY BRUNCH</span>
+                      <span className="text-sm tracking-wider text-white/70">12:30 PM – 5:00 PM</span>
                     </div>
                     <div className="flex flex-col md:flex-row md:justify-between py-6">
-                      <span className="text-sm tracking-[0.2em] font-medium mb-3 md:mb-0 text-luxury-charcoal">PLEASE NOTE</span>
-                      <span className="text-sm tracking-wider text-luxury-charcoal/60 md:text-right md:w-2/3 leading-relaxed">
+                      <span className="text-sm tracking-[0.2em] font-medium mb-3 md:mb-0 text-white">PLEASE NOTE</span>
+                      <span className="text-sm tracking-wider text-white/60 md:text-right md:w-2/3 leading-relaxed">
                         AER IS OPEN TO GUESTS AGES 21 AND ABOVE. DRESS CODE IN EFFECT. GENTLEMEN ARE ASKED TO
                         WEAR CLOSED-TOE SHOES AND LONG PANTS.
                       </span>
@@ -214,7 +200,7 @@ export default function Overview() {
             </section>
 
             {/* Menus Section */}
-            <section id="menus" className="section-luxury bg-luxury-ivory">
+            <section id="menus" className="section-luxury bg-black">
               <div className="container-luxury">
                 <div className="max-w-4xl mx-auto">
                   <p className="section-subtitle">CULINARY OFFERINGS</p>
@@ -222,13 +208,13 @@ export default function Overview() {
                   <div className="w-24 h-0.5 mx-auto mb-12" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
                   <div className="grid md:grid-cols-2 gap-6">
                     <a href="#yacht" className="group border bg-white/50 backdrop-blur-sm p-8 rounded-xl flex justify-between items-center hover:shadow-xl transition-all duration-300" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-luxury-charcoal">YACHT CLUB</span>
+                      <span className="text-sm tracking-[0.2em] font-medium text-white">YACHT CLUB</span>
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-2 transition-transform duration-300" style={{ color: '#C8A962' }}>
                         <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" strokeWidth="1.5" />
                       </svg>
                     </a>
                     <a href="#gimlet" className="group border bg-white/50 backdrop-blur-sm p-8 rounded-xl flex justify-between items-center hover:shadow-xl transition-all duration-300" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-luxury-charcoal">GIMLET GARDEN</span>
+                      <span className="text-sm tracking-[0.2em] font-medium text-white">GIMLET GARDEN</span>
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-2 transition-transform duration-300" style={{ color: '#C8A962' }}>
                         <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" strokeWidth="1.5" />
                       </svg>
@@ -256,9 +242,9 @@ export default function Overview() {
               <div className="max-w-4xl mx-auto px-4">
                 <h3 className="text-2xl font-light text-center mb-12 tracking-wide">EVENTS</h3>
                 <div className="bg-gray-50 p-8">
-                  <p className="text-xs tracking-widest text-gray-600 mb-2">EVERY SUNDAY, 12:30 PM – 5:00 PM</p>
+                  <p className="text-xs tracking-widest text-gray-300 mb-2">EVERY SUNDAY, 12:30 PM – 5:00 PM</p>
                   <h4 className="text-3xl font-light mb-4">SUNDAY BRUNCH</h4>
-                  <p className="text-gray-700 mb-6 leading-relaxed">
+                  <p className="text-gray-200 mb-6 leading-relaxed">
                     Experience Sundays anew with our spirited brunch featuring indulgent cocktails
                     and brunch favourites, complemented by DJ tunes or live performances and unrivalled rooftop views of the
                     Arabian Sea.
@@ -282,7 +268,7 @@ export default function Overview() {
             </section>
 
             {/* More Dining Options */}
-            <section className="py-16 bg-gray-50">
+            <section className="py-16 bg-gray-900">
               <div className="max-w-7xl mx-auto px-4">
                 <h3 className="text-2xl font-light text-center mb-12 tracking-wide">MORE DINING OPTIONS</h3>
                 <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -330,8 +316,8 @@ export default function Overview() {
                         />
                       </div>
                       <div className="p-6">
-                        <h4 className="text-xl font-serif mb-3 text-luxury-charcoal group-hover:text-luxury-gold transition-colors duration-300">{item.title}</h4>
-                        <p className="text-sm text-gray-600 leading-relaxed mb-4">{item.desc}</p>
+                        <h4 className="text-xl font-serif mb-3 text-white group-hover:text-luxury-gold transition-colors duration-300">{item.title}</h4>
+                        <p className="text-sm text-gray-300 leading-relaxed mb-4">{item.desc}</p>
                         <a
                           href={`#${item.title.toLowerCase().replace(/\s/g, '')}`}
                           className="inline-flex items-center text-sm tracking-wider text-luxury-gold border-b border-luxury-gold hover:border-transparent transition-all duration-300 group-hover:translate-x-1"

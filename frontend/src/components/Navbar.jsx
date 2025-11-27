@@ -1,67 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { cn } from '../lib/utils';
-import { HoverButton } from './ui/HoverButton';
-
-const MenuItem = ({ setActive, active, item, children, isScrolled }) => {
-    return (
-        <div onMouseEnter={() => setActive(item)} className="relative">
-            <button className="cursor-pointer text-luxury-charcoal hover:text-luxury-gold transition-colors duration-200 text-sm tracking-wide px-4 py-2 font-medium">
-                {item}
-            </button>
-            {active === item && (
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 pt-4">
-                    <div
-                        className={cn(
-                            "rounded-lg border overflow-hidden transition-all duration-300",
-                            isScrolled
-                                ? "bg-white shadow-2xl border-luxury-gold/20"
-                                : "bg-white/40 backdrop-blur-lg shadow-2xl border-white/30"
-                        )}
-                        style={{
-                            animation: 'slideDown 0.3s ease-out forwards'
-                        }}
-                    >
-                        <div className="w-max h-full p-4">
-                            {children}
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-};
-
-const HoveredLink = ({ children, to, ...rest }) => {
-    return (
-        <Link
-            {...rest}
-            to={to}
-            className="text-luxury-charcoal/70 hover:text-luxury-gold transition-colors duration-200 block py-2 px-3 rounded-md hover:bg-luxury-ivory/50"
-        >
-            {children}
-        </Link>
-    );
-};
-
-const Menu = ({ setActive, children, isScrolled }) => {
-    return (
-        <nav
-            onMouseLeave={() => setActive(null)}
-            className={cn(
-                "relative rounded-full border flex items-center justify-center space-x-2 px-6 py-3 transition-all duration-300",
-                isScrolled
-                    ? "bg-white border-luxury-gold/20 shadow-lg"
-                    : "bg-white/40 backdrop-blur-lg border-white/30 shadow-2xl"
-            )}
-        >
-            {children}
-        </nav>
-    );
-};
 
 export default function Navbar() {
-    const [active, setActive] = useState(null);
     const [isScrolled, setIsScrolled] = useState(false);
     const location = useLocation();
 
@@ -75,51 +15,121 @@ export default function Navbar() {
     }, []);
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-[100] flex items-center justify-center p-4" style={{ position: 'fixed' }}>
-            <Menu setActive={setActive} isScrolled={isScrolled}>
-                {/* Logo */}
-                <Link to="/" className="flex items-center space-x-2 px-4">
-                    <div className="w-8 h-8 bg-luxury-charcoal flex items-center justify-center border border-luxury-gold rounded">
-                        <span className="text-luxury-gold text-sm font-serif">TH</span>
+        <nav
+            className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${isScrolled
+                ? 'bg-[#0A0A0C]/95 backdrop-blur-xl shadow-lg py-4'
+                : 'bg-gradient-to-b from-black/90 to-transparent py-8'
+                }`}
+            style={{
+                borderBottom: isScrolled ? '1px solid rgba(200, 169, 98, 0.1)' : 'none'
+            }}
+        >
+            <div className="max-w-7xl mx-auto px-6">
+                {/* Top Row - Utilities & Brand */}
+                <div className="flex items-center justify-between mb-6 relative">
+                    {/* Left Side - Menu & Language */}
+                    <div className="flex items-center gap-8">
+                        <button
+                            className="text-luxury-ivory/80 hover:text-luxury-gold transition-colors duration-300 text-xs tracking-[0.2em] uppercase font-medium"
+                            aria-label="Menu"
+                        >
+                            Menu
+                        </button>
+                        <div className="hidden md:flex items-center gap-2 text-luxury-ivory/60 text-[10px] tracking-widest font-medium">
+                            <span className="text-luxury-gold">EN</span>
+                            <span>/</span>
+                            <span className="hover:text-luxury-gold transition-colors cursor-pointer">FR</span>
+                        </div>
                     </div>
-                    <span className="text-luxury-charcoal font-serif text-sm tracking-wide hidden sm:block">The Hollywood</span>
-                </Link>
 
-                {/* Menu Items */}
-                <MenuItem setActive={setActive} active={active} item="Stay" isScrolled={isScrolled}>
-                    <div className="flex flex-col space-y-3 text-sm min-w-[200px]">
-                        <HoveredLink to="/accommodations">Accommodations</HoveredLink>
-                        <HoveredLink to="/offers">Special Offers</HoveredLink>
+                    {/* Center - Brand Name */}
+                    <Link
+                        to="/"
+                        className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                    >
+                        <div className="flex items-center gap-3">
+                            <img
+                                src="/logo.png"
+                                alt="The Hollywood"
+                                className="h-12 w-auto"
+                                style={{
+                                    filter: 'drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3))'
+                                }}
+                            />
+                            <span
+                                className="text-luxury-ivory font-serif text-2xl tracking-wide hidden sm:block"
+                                style={{
+                                    fontFamily: 'Playfair Display, serif',
+                                    fontWeight: 400,
+                                    fontStyle: 'italic',
+                                    letterSpacing: '1px'
+                                }}
+                            >
+                                The Hollywood
+                            </span>
+                        </div>
+                    </Link>
+
+                    {/* Right Side - Contacts & Booking */}
+                    <div className="flex items-center gap-8">
+                        <Link
+                            to="/contact"
+                            className="hidden md:block text-luxury-ivory/80 hover:text-luxury-gold transition-colors duration-300 text-xs tracking-[0.2em] uppercase font-medium"
+                        >
+                            Contacts
+                        </Link>
+                        <Link
+                            to="/booking"
+                            className="group flex items-center gap-2 bg-luxury-gold hover:bg-luxury-gold-light text-white px-6 py-2.5 rounded-lg transition-all duration-300 text-xs tracking-[0.15em] uppercase font-medium"
+                            style={{
+                                boxShadow: '0 4px 15px rgba(200, 169, 98, 0.3)'
+                            }}
+                        >
+                            <span>Booking</span>
+                            <svg
+                                width="14"
+                                height="14"
+                                viewBox="0 0 20 20"
+                                fill="none"
+                                className="transition-transform duration-300 group-hover:translate-x-1"
+                            >
+                                <path
+                                    d="M4 10H16M16 10L11 5M16 10L11 15"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </Link>
                     </div>
-                </MenuItem>
+                </div>
 
-                <MenuItem setActive={setActive} active={active} item="Experience" isScrolled={isScrolled}>
-                    <div className="flex flex-col space-y-3 text-sm min-w-[200px]">
-                        <HoveredLink to="/dining">Dining</HoveredLink>
-                        <HoveredLink to="/experiences">Experiences</HoveredLink>
-                    </div>
-                </MenuItem>
+                {/* Separator Line */}
+                <div className="w-full h-px bg-luxury-ivory/10 mb-6" />
 
-                <MenuItem setActive={setActive} active={active} item="About" isScrolled={isScrolled}>
-                    <div className="flex flex-col space-y-3 text-sm min-w-[200px]">
-                        <HoveredLink to="/overview">Overview</HoveredLink>
-                        <a href="#contact" className="text-taj-gray hover:text-taj-gold transition-colors duration-200 block py-2 px-3 rounded-md hover:bg-gray-50">
-                            Contact
-                        </a>
-                    </div>
-                </MenuItem>
-
-                {/* Book Now Button */}
-                <HoverButton
-                    glowColor="#C5A66B"
-                    backgroundColor="#9D8658"
-                    textColor="#ffffff"
-                    hoverTextColor="#ffffff"
-                    className="ml-2"
-                >
-                    Book Now
-                </HoverButton>
-            </Menu>
-        </div>
+                {/* Bottom Row - Navigation Links */}
+                <div className="flex items-center justify-center gap-8 md:gap-12 transition-all duration-500">
+                    {[
+                        { name: 'Overview', path: '/' },
+                        { name: 'Accommodations', path: '/accommodations' },
+                        { name: 'Dining', path: '/dining' },
+                        { name: 'Experiences', path: '/experiences' },
+                        { name: 'Offers', path: '/offers' }
+                    ].map((link) => (
+                        <Link
+                            key={link.name}
+                            to={link.path}
+                            className={`text-xs tracking-[0.2em] uppercase font-medium transition-all duration-300 hover:text-luxury-gold relative group ${location.pathname === link.path ? 'text-luxury-gold' : 'text-luxury-ivory/70'
+                                }`}
+                        >
+                            {link.name}
+                            <span className={`absolute -bottom-2 left-0 w-full h-0.5 bg-luxury-gold transform origin-left transition-transform duration-300 ${location.pathname === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
+                                }`}></span>
+                        </Link>
+                    ))}
+                </div>
+            </div>
+        </nav>
     );
 }

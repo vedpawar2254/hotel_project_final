@@ -8,6 +8,8 @@ import AccommodationsPage from './pages/Accommodations';
 import OffersPage from './pages/Offers';
 import ExperiencesPage from './pages/Experiences';
 import DiningPage from './pages/Dining';
+import BookingPage from './pages/Booking';
+import ConfirmationPage from './pages/Confirmation';
 
 
 function App() {
@@ -18,6 +20,10 @@ function App() {
           {/* Home/Overview Route */}
           <Route path="/" element={<OverviewPage />} />
           <Route path="/overview" element={<OverviewPage />} />
+
+          {/* Booking Route */}
+          <Route path="/booking" element={<BookingPage />} />
+          <Route path="/confirmation" element={<ConfirmationPage />} />
 
           {/* Accommodations Route */}
           <Route path="/accommodations" element={<AccommodationsPage />} />

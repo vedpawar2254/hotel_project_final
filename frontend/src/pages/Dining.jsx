@@ -97,7 +97,7 @@ export default function DiningPage() {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <p className="text-sm tracking-[0.3em] mb-4 text-taj-gold">CULINARY EXCELLENCE</p>
+            <p className="text-xxl tracking-[0.3em] mb-4 text-taj-gold">CULINARY EXCELLENCE</p>
             <h1 className="text-6xl md:text-7xl font-serif mb-6 tracking-wider text-white">DINING</h1>
             <p className="text-lg tracking-wide max-w-2xl mx-auto font-sans font-light">
               Discover exceptional dining experiences from rooftop cocktails to authentic Asian cuisine

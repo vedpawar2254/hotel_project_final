@@ -29,22 +29,11 @@
   }
 
   body {
-    @apply font-sans text-luxury-charcoal bg-luxury-ivory antialiased;
+    @apply font-sans text-luxury-charcoal bg-[#0A0A0C] antialiased;
     line-height: 1.7;
   }
 
-  /* Fixed Bottom Blur Vignette */
-  body::after {
-    content: '';
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: linear-gradient(to top, rgba(10, 10, 12, 0.6) 0%, rgba(10, 10, 12, 0.4) 30%, transparent 100%);
-    pointer-events: none;
-    z-index: 9999;
-  }
+
 
   h1,
   h2,
