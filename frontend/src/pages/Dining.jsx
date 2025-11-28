@@ -16,7 +16,7 @@ export default function DiningPage() {
       name: 'AER Rooftop Bar',
       category: 'Rooftop Bar',
       image: '/hero-rooftop.jpg',
-      description: "Mumbai's chic open-air rooftop bar offers innovative cocktails and premier wine selections, with a scenic view of the bay.",
+      description: "Chandigarh's chic open-air rooftop bar offers innovative cocktails and premier wine selections, with a scenic view of the bay.",
       hours: 'Daily 5:00 PM – 1:30 AM',
       cuisine: 'Bar & Lounge',
       priceRange: '₹₹₹'

@@ -10,9 +10,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 
 export default function Overview() {
-  const [people, setPeople] = useState('2');
-  const [time, setTime] = useState('7:00 PM');
-  const [date, setDate] = useState('Nov 23, 2025');
   const [showBackToTop, setShowBackToTop] = useState(false);
 
   // Smooth scroll handler for navigation links
@@ -72,10 +69,7 @@ export default function Overview() {
     };
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Reservation for ${people} people at ${time} on ${date}`);
-  };
+
 
   return (
     <>
@@ -90,248 +84,144 @@ export default function Overview() {
             <ParallaxHero
               backgroundImage="/hero-rooftop.jpg"
               title="Explore The Hollywood"
-              subtitle="Where skyline whispers meet curated cocktails. Mumbai's elevated escape."
+              subtitle="Where skyline whispers meet curated cocktails. Chandigarh's elevated escape."
             >
               <BookingWidget />
             </ParallaxHero>
 
-            {/* Reservation Section */}
-            <section className="section-luxury bg-black">
-              <div className="container-luxury">
-                <div className="max-w-5xl mx-auto">
-                  <div className="glass-card rounded-3xl p-10 md:p-12 border border-luxury-gold/20" style={{ boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.5)' }}>
-                    <h3 className="section-title text-3xl mb-2">Reserve Your Evening</h3>
-                    <div className="w-16 h-0.5 mx-auto mb-8" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
-                    <form onSubmit={handleSubmit} className="flex flex-wrap gap-6 items-end justify-center">
-                      <div className="flex flex-col flex-1 min-w-[140px]">
-                        <label htmlFor="people" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Guests</label>
-                        <select
-                          id="people"
-                          value={people}
-                          onChange={(e) => setPeople(e.target.value)}
-                          className="border px-5 py-3 rounded-xl focus:outline-none focus:border-luxury-gold bg-white/50 backdrop-blur-sm transition-all duration-300"
-                          style={{ borderColor: '#E5D9C5' }}
-                        >
-                          <option value="2">2</option>
-                          <option value="3">3</option>
-                          <option value="4">4</option>
-                          <option value="5">5</option>
-                          <option value="6">6</option>
-                        </select>
-                      </div>
-                      <div className="flex flex-col flex-1 min-w-[140px]">
-                        <label htmlFor="time" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Time</label>
-                        <select
-                          id="time"
-                          value={time}
-                          onChange={(e) => setTime(e.target.value)}
-                          className="border px-5 py-3 rounded-xl focus:outline-none focus:border-luxury-gold bg-white/50 backdrop-blur-sm transition-all duration-300"
-                          style={{ borderColor: '#E5D9C5' }}
-                        >
-                          <option value="7:00 PM">7:00 PM</option>
-                          <option value="7:30 PM">7:30 PM</option>
-                          <option value="8:00 PM">8:00 PM</option>
-                          <option value="8:30 PM">8:30 PM</option>
-                          <option value="9:00 PM">9:00 PM</option>
-                        </select>
-                      </div>
-                      <div className="flex flex-col flex-1 min-w-[160px]">
-                        <label htmlFor="date" className="text-xs tracking-[0.2em] text-white/70 mb-3 uppercase font-medium">Date</label>
-                        <input
-                          type="text"
-                          id="date"
-                          value={date}
-                          onChange={(e) => setDate(e.target.value)}
-                          className="border px-5 py-3 rounded-xl focus:outline-none focus:border-luxury-gold bg-white/50 backdrop-blur-sm transition-all duration-300"
-                          style={{ borderColor: '#E5D9C5' }}
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        className="btn-gold px-10 py-3 shimmer"
-                      >
-                        Secure Table
-                      </button>
-                    </form>
+
+
+            {/* Minimal Description */}
+            <section className="bg-black py-32 px-6">
+              <div className="max-w-4xl mx-auto text-center">
+                <p className="text-white text-3xl md:text-4xl font-light leading-relaxed tracking-wide" style={{ fontFamily: 'Playfair Display, serif' }}>
+                  Chandigarh's chic open-air rooftop bar offers innovative cocktails and premier wine selections, with a scenic view of the bay.
+                </p>
+                <div className="w-px h-24 bg-luxury-gold mx-auto my-12 opacity-50"></div>
+                <p className="text-white/60 text-lg font-light tracking-wider uppercase">
+                  Elevated Evenings
+                </p>
+              </div>
+            </section>
+
+            {/* Minimal Hours Section */}
+            <section id="hours" className="bg-black pb-32 px-6">
+              <div className="max-w-2xl mx-auto">
+                <div className="text-center mb-16">
+                  <span className="text-luxury-gold text-xs tracking-[0.3em] uppercase">Timings</span>
+                  <h2 className="text-white text-4xl mt-4 font-light" style={{ fontFamily: 'Playfair Display, serif' }}>Opening Hours</h2>
+                </div>
+
+                <div className="space-y-12">
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <span className="text-white text-lg tracking-widest uppercase">Daily</span>
+                    <span className="text-white/60 font-light">5:00 PM – 1:30 AM</span>
+                  </div>
+
+                  <div className="flex flex-col items-center text-center space-y-2">
+                    <span className="text-white text-lg tracking-widest uppercase">Sunday Brunch</span>
+                    <span className="text-white/60 font-light">12:30 PM – 5:00 PM</span>
+                  </div>
+
+                  <div className="pt-12 border-t border-white/10 text-center">
+                    <p className="text-white/40 text-sm tracking-widest leading-loose max-w-lg mx-auto">
+                      AER IS OPEN TO GUESTS AGES 21 AND ABOVE. DRESS CODE IN EFFECT. GENTLEMEN ARE ASKED TO WEAR CLOSED-TOE SHOES AND LONG PANTS.
+                    </p>
                   </div>
                 </div>
               </div>
             </section>
 
-            {/* Description */}
-            <section className="section-luxury bg-black" style={{ scrollSnapAlign: 'start' }}>
-              <div className="container-luxury">
-                <div className="max-w-3xl mx-auto text-center fade-in">
-                  <p className="text-white/80 text-xl leading-relaxed font-light">
-                    Mumbai's chic open-air rooftop bar offers innovative cocktails and premier wine selections, with a scenic
-                    view of the bay. Find yourself with a relaxed sundowner in the early evenings or come when the music's pace
-                    matches the level of service.
+            {/* Minimal Menus Grid */}
+            <section id="menus" className="bg-black pb-32 px-6">
+              <div className="max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-px bg-white/10 border border-white/10">
+                  <a href="#yacht" className="group relative bg-black p-16 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors duration-500">
+                    <span className="text-luxury-gold text-xs tracking-[0.3em] mb-4 uppercase">Menu 01</span>
+                    <h3 className="text-white text-3xl font-light mb-6 group-hover:text-luxury-gold transition-colors duration-300" style={{ fontFamily: 'Playfair Display, serif' }}>Yacht Club</h3>
+                    <span className="text-white/40 text-xs tracking-widest group-hover:text-white transition-colors duration-300">VIEW MENU</span>
+                  </a>
+
+                  <a href="#gimlet" className="group relative bg-black p-16 flex flex-col items-center justify-center text-center hover:bg-white/5 transition-colors duration-500">
+                    <span className="text-luxury-gold text-xs tracking-[0.3em] mb-4 uppercase">Menu 02</span>
+                    <h3 className="text-white text-3xl font-light mb-6 group-hover:text-luxury-gold transition-colors duration-300" style={{ fontFamily: 'Playfair Display, serif' }}>Gimlet Garden</h3>
+                    <span className="text-white/40 text-xs tracking-widest group-hover:text-white transition-colors duration-300">VIEW MENU</span>
+                  </a>
+                </div>
+              </div>
+            </section>
+
+            {/* Minimal Events Section */}
+            <section id="events" className="bg-black pb-32 px-6">
+              <div className="max-w-4xl mx-auto text-center">
+                <span className="text-luxury-gold text-xs tracking-[0.3em] uppercase">Happenings</span>
+                <h2 className="text-white text-4xl mt-4 mb-12 font-light" style={{ fontFamily: 'Playfair Display, serif' }}>Sunday Brunch</h2>
+
+                <div className="bg-white/5 p-12 md:p-16 border border-white/10 backdrop-blur-sm">
+                  <p className="text-white/80 text-lg leading-relaxed font-light mb-8 max-w-2xl mx-auto">
+                    Experience Sundays anew with our spirited brunch featuring indulgent cocktails and brunch favourites, complemented by DJ tunes and unrivalled rooftop views of the Arabian Sea.
                   </p>
+                  <Link to="/booking" className="inline-block text-white text-xs tracking-[0.2em] border-b border-luxury-gold pb-1 hover:text-luxury-gold transition-colors duration-300 uppercase">
+                    Reserve Your Table
+                  </Link>
                 </div>
               </div>
             </section>
 
-            {/* Hours Section */}
-            <section id="hours" className="section-luxury bg-black">
-              <div className="container-luxury">
-                <div className="max-w-4xl mx-auto">
-                  <p className="section-subtitle">OPENING HOURS</p>
-                  <h3 className="section-title mb-4">Hours</h3>
-                  <div className="w-24 h-0.5 mx-auto mb-12" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
-                  <div className="space-y-6">
-                    <div className="flex justify-between py-6 border-b" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-white">DAILY</span>
-                      <span className="text-sm tracking-wider text-white/70">5:00 PM – 1:30 AM</span>
-                    </div>
-                    <div className="flex justify-between py-6 border-b" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-white">SUNDAY BRUNCH</span>
-                      <span className="text-sm tracking-wider text-white/70">12:30 PM – 5:00 PM</span>
-                    </div>
-                    <div className="flex flex-col md:flex-row md:justify-between py-6">
-                      <span className="text-sm tracking-[0.2em] font-medium mb-3 md:mb-0 text-white">PLEASE NOTE</span>
-                      <span className="text-sm tracking-wider text-white/60 md:text-right md:w-2/3 leading-relaxed">
-                        AER IS OPEN TO GUESTS AGES 21 AND ABOVE. DRESS CODE IN EFFECT. GENTLEMEN ARE ASKED TO
-                        WEAR CLOSED-TOE SHOES AND LONG PANTS.
-                      </span>
-                    </div>
-                  </div>
+            {/* Minimal Reservation CTA */}
+            <section className="bg-black pb-32 px-6">
+              <div className="max-w-xl mx-auto text-center border-y border-white/10 py-16">
+                <p className="text-white text-2xl font-light mb-8" style={{ fontFamily: 'Playfair Display, serif' }}>Make a Reservation</p>
+                <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+                  <a href="tel:912269828000" className="text-white/60 hover:text-white transition-colors duration-300 tracking-wider">91 (22) 6982 8000</a>
+                  <Link to="/booking" className="bg-white text-black px-8 py-3 text-xs tracking-[0.2em] hover:bg-luxury-gold hover:text-white transition-all duration-300 uppercase">
+                    Book Now
+                  </Link>
                 </div>
               </div>
             </section>
 
-            {/* Menus Section */}
-            <section id="menus" className="section-luxury bg-black">
-              <div className="container-luxury">
-                <div className="max-w-4xl mx-auto">
-                  <p className="section-subtitle">CULINARY OFFERINGS</p>
-                  <h3 className="section-title mb-4">Menus</h3>
-                  <div className="w-24 h-0.5 mx-auto mb-12" style={{ background: 'linear-gradient(90deg, transparent, #C8A962, transparent)' }}></div>
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <a href="#yacht" className="group border bg-white/50 backdrop-blur-sm p-8 rounded-xl flex justify-between items-center hover:shadow-xl transition-all duration-300" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-white">YACHT CLUB</span>
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-2 transition-transform duration-300" style={{ color: '#C8A962' }}>
-                        <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
-                    </a>
-                    <a href="#gimlet" className="group border bg-white/50 backdrop-blur-sm p-8 rounded-xl flex justify-between items-center hover:shadow-xl transition-all duration-300" style={{ borderColor: '#E5D9C5' }}>
-                      <span className="text-sm tracking-[0.2em] font-medium text-white">GIMLET GARDEN</span>
-                      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className="group-hover:translate-x-2 transition-transform duration-300" style={{ color: '#C8A962' }}>
-                        <path d="M5 10H15M15 10L10 5M15 10L10 15" stroke="currentColor" strokeWidth="1.5" />
-                      </svg>
-                    </a>
-                  </div>
+            {/* Minimal Dining Options */}
+            <section className="bg-black pb-32 px-6">
+              <div className="max-w-7xl mx-auto">
+                <div className="text-center mb-16">
+                  <span className="text-luxury-gold text-xs tracking-[0.3em] uppercase">More Dining</span>
+                  <h2 className="text-white text-3xl mt-4 font-light" style={{ fontFamily: 'Playfair Display, serif' }}>Culinary Experiences</h2>
                 </div>
-              </div>
-            </section>
 
-            {/* CTA Banner */}
-            <section className="bg-gray-900 text-white py-12">
-              <div className="max-w-4xl mx-auto px-4 text-center">
-                <p className="text-2xl font-light mb-6">Make your reservation.</p>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                  <a href="tel:912269828000" className="text-lg tracking-wider hover:underline">91 (22) 6982 8000</a>
-                  <button className="bg-white text-taj-dark px-8 py-3 text-sm tracking-widest hover:bg-gray-100 transition uppercase font-medium">
-                    RESERVE A TABLE
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            {/* Events Section */}
-            <section id="events" className="py-16">
-              <div className="max-w-4xl mx-auto px-4">
-                <h3 className="text-2xl font-light text-center mb-12 tracking-wide">EVENTS</h3>
-                <div className="bg-gray-50 p-8">
-                  <p className="text-xs tracking-widest text-gray-300 mb-2">EVERY SUNDAY, 12:30 PM – 5:00 PM</p>
-                  <h4 className="text-3xl font-light mb-4">SUNDAY BRUNCH</h4>
-                  <p className="text-gray-200 mb-6 leading-relaxed">
-                    Experience Sundays anew with our spirited brunch featuring indulgent cocktails
-                    and brunch favourites, complemented by DJ tunes or live performances and unrivalled rooftop views of the
-                    Arabian Sea.
-                  </p>
-                  <a href="#reserve-brunch" className="text-sm tracking-wider underline hover:no-underline">RESERVE NOW</a>
-                </div>
-              </div>
-            </section>
-
-            {/* CTA Banner 2 */}
-            <section className="bg-gray-900 text-white py-12">
-              <div className="max-w-4xl mx-auto px-4 text-center">
-                <p className="text-2xl font-light mb-6">Make your reservation.</p>
-                <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-                  <a href="tel:912269828000" className="text-lg tracking-wider hover:underline">91 (22) 6982 8000</a>
-                  <button className="bg-white text-taj-dark px-8 py-3 text-sm tracking-widest hover:bg-gray-100 transition uppercase font-medium">
-                    RESERVE A TABLE
-                  </button>
-                </div>
-              </div>
-            </section>
-
-            {/* More Dining Options */}
-            <section className="py-16 bg-gray-900">
-              <div className="max-w-7xl mx-auto px-4">
-                <h3 className="text-2xl font-light text-center mb-12 tracking-wide">MORE DINING OPTIONS</h3>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 border border-white/10">
                   {[
                     {
                       img: '/sanqi.jpg',
                       title: 'San:Qi',
-                      desc: 'San:Qi is temporarily closed for renovations. From tandoor to woks, sushi bar to Thai cookery, our dramatic dining room takes you on a pan-Asian culinary tour, accompanied by an extensive wine list.'
+                      desc: 'Pan-Asian culinary tour.'
                     },
                     {
                       img: '/takeaway.jpg',
                       title: 'Takeaway',
-                      desc: 'Enjoy a selection of house-made treats and sweet delights from our pastry team at Four Seasons Hotel Mumbai.'
+                      desc: 'House-made sweet delights.'
                     },
                     {
                       img: '/inroom.jpg',
                       title: 'In-Room Dining',
-                      desc: 'Ideal for time-zone-hopping travellers, impromptu meetings or for a quiet, private meal, our extensive menu lets you dine in style in the comfort of your private space.'
+                      desc: 'Dine in private comfort.'
                     },
                     {
                       img: '/opus.jpg',
                       title: 'Opus',
-                      desc: 'Immerse yourself in a culinary experience that spans continents at Opus, our new art deco restaurant offering a selection of coffees on tap, single estate teas, wines and cocktails.'
+                      desc: 'Coffee, tea, and wines.'
                     }
                   ].map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="bg-white shadow-md rounded-xl overflow-hidden group cursor-pointer transition-all duration-500 hover:shadow-2xl hover:-translate-y-3"
-                      style={{
-                        transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.boxShadow = '0 20px 40px rgba(200, 169, 98, 0.3), 0 0 0 1px rgba(200, 169, 98, 0.2)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
-                      }}
-                    >
-                      <div className="h-48 bg-gray-200 overflow-hidden">
-                        <img
-                          src={item.img}
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                        />
-                      </div>
-                      <div className="p-6">
-                        <h4 className="text-xl font-serif mb-3 text-white group-hover:text-luxury-gold transition-colors duration-300">{item.title}</h4>
-                        <p className="text-sm text-gray-300 leading-relaxed mb-4">{item.desc}</p>
-                        <a
-                          href={`#${item.title.toLowerCase().replace(/\s/g, '')}`}
-                          className="inline-flex items-center text-sm tracking-wider text-luxury-gold border-b border-luxury-gold hover:border-transparent transition-all duration-300 group-hover:translate-x-1"
-                        >
-                          DETAILS
-                          <svg
-                            className="ml-2 w-4 h-4 transition-transform duration-300 group-hover:translate-x-1"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                          </svg>
-                        </a>
+                    <div key={idx} className="group relative bg-black aspect-[3/4] overflow-hidden">
+                      <img
+                        src={item.img}
+                        alt={item.title}
+                        className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-700"
+                      />
+                      <div className="absolute inset-0 flex flex-col justify-end p-8">
+                        <h4 className="text-white text-xl font-light mb-2" style={{ fontFamily: 'Playfair Display, serif' }}>{item.title}</h4>
+                        <p className="text-white/60 text-sm font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-4 group-hover:translate-y-0">{item.desc}</p>
+                        <span className="text-luxury-gold text-xs tracking-widest uppercase opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">Explore</span>
                       </div>
                     </div>
                   ))}
@@ -339,79 +229,43 @@ export default function Overview() {
               </div>
             </section>
 
-            {/* Footer */}
-            <footer className="bg-gray-900 text-white py-16">
-              <div className="max-w-7xl mx-auto px-4">
-                <div className="text-center mb-12">
-                  <svg width="60" height="60" viewBox="0 0 60 60" fill="none" className="mx-auto mb-4">
-                    <path d="M30 3L3 17V43L30 57L57 43V17L30 3Z" stroke="white" strokeWidth="0.5" fill="none" />
-                    <path d="M30 17L17 24V36L30 43L43 36V24L30 17Z" stroke="white" strokeWidth="0.5" fill="none" />
-                  </svg>
-                  <h2 className="text-2xl font-light tracking-widest">FOUR SEASONS</h2>
-                </div>
+            {/* Minimal Footer */}
+            <footer className="bg-black text-white py-24 border-t border-white/10">
+              <div className="max-w-7xl mx-auto px-6">
+                <div className="flex flex-col items-center text-center">
+                  {/* Minimal Logo */}
+                  <div className="mb-12">
+                    <h2 className="text-2xl tracking-[0.3em] font-light text-white">THE HOLLYWOOD</h2>
+                    <span className="block text-luxury-gold text-xs tracking-[0.4em] mt-2 uppercase">Chandigarh</span>
+                  </div>
 
-                <div className="grid md:grid-cols-4 gap-8 mb-12">
-                  <div>
-                    <h3 className="text-sm tracking-widest mb-4">About</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li><a href="#about" className="hover:underline">ABOUT US</a></li>
-                      <li><a href="#good" className="hover:underline">FOUR SEASONS FOR GOOD</a></li>
-                      <li><a href="#safety" className="hover:underline">HEALTH AND SAFETY</a></li>
-                      <li><a href="#careers" className="hover:underline">CAREERS</a></li>
-                      <li><a href="#contact" className="hover:underline">CONTACT US</a></li>
-                    </ul>
+                  {/* Minimal Navigation */}
+                  <div className="flex flex-wrap justify-center gap-8 md:gap-16 mb-16">
+                    <a href="#about" className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 uppercase">About</a>
+                    <a href="#dining" className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 uppercase">Dining</a>
+                    <a href="#events" className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 uppercase">Events</a>
+                    <a href="#contact" className="text-xs tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-300 uppercase">Contact</a>
                   </div>
-                  <div>
-                    <h3 className="text-sm tracking-widest mb-4">Reservations</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li><a href="#invoice" className="hover:underline">REQUEST AN INVOICE</a></li>
-                      <li><a href="#find" className="hover:underline">FIND A RESERVATION</a></li>
-                      <li><a href="#email" className="hover:underline">EMAIL PREFERENCES</a></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-sm tracking-widest mb-4">News</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li><a href="#press" className="hover:underline">PRESS ROOM</a></li>
-                      <li><a href="#openings" className="hover:underline">NEW OPENINGS</a></li>
-                      <li><a href="#magazine" className="hover:underline">MAGAZINE</a></li>
-                      <li><a href="#newsletter" className="hover:underline">NEWSLETTER</a></li>
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="text-sm tracking-widest mb-4">More</h3>
-                    <ul className="space-y-2 text-sm">
-                      <li><a href="#jet" className="hover:underline">PRIVATE JET</a></li>
-                      <li><a href="#yachts" className="hover:underline">YACHTS</a></li>
-                      <li><a href="#residences" className="hover:underline">RESIDENCES</a></li>
-                      <li><a href="#villas" className="hover:underline">VILLA & RESIDENCE RENTALS</a></li>
-                      <li><a href="#gifts" className="hover:underline">GIFT CARDS</a></li>
-                    </ul>
-                  </div>
-                </div>
 
-                <div className="flex justify-center space-x-6">
-                  <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="white"
-                        strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </a>
-                  <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="white" strokeWidth="1.5" />
-                      <circle cx="12" cy="12" r="4" stroke="white" strokeWidth="1.5" />
-                      <circle cx="17.5" cy="6.5" r="1" fill="white" />
-                    </svg>
-                  </a>
-                  <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <path
-                        d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"
-                        stroke="white" strokeWidth="1.5" />
-                      <polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="white" />
-                    </svg>
-                  </a>
+                  {/* Social Icons */}
+                  <div className="flex space-x-8 mb-12">
+                    <a href="#" className="text-white/40 hover:text-luxury-gold transition-colors duration-300">
+                      <span className="sr-only">Instagram</span>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fillRule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772 4.902 4.902 0 011.772-1.153c.636-.247 1.363-.416 2.427-.465C9.673 2.013 10.03 2 12.48 2h.16zM12 7a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clipRule="evenodd" />
+                      </svg>
+                    </a>
+                    <a href="#" className="text-white/40 hover:text-luxury-gold transition-colors duration-300">
+                      <span className="sr-only">Facebook</span>
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path fillRule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clipRule="evenodd" />
+                      </svg>
+                    </a>
+                  </div>
+
+                  <p className="text-white/20 text-[10px] tracking-widest uppercase">
+                    © 2025 The Hollywood. All rights reserved.
+                  </p>
                 </div>
               </div>
             </footer>

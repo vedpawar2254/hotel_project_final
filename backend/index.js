@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   res.send("HIEE");
 });
 
-app.get("/dashboard", isLoggedIn ,async (req, res) => {
+app.get("/dashboard", async (req, res) => {
   const bookings = await bookingModel.find();
   res.json(bookings);
 });

@@ -191,8 +191,8 @@ export default function Confirmation() {
                                             <label
                                                 key={method}
                                                 className={`cursor-pointer border rounded-xl p-4 flex flex-col items-center justify-center gap-3 transition-all duration-300 ${paymentMethod === method.toLowerCase()
-                                                        ? 'bg-luxury-gold/10 border-luxury-gold text-luxury-gold'
-                                                        : 'bg-transparent border-white/10 text-luxury-ivory/60 hover:border-white/30'
+                                                    ? 'bg-luxury-gold/10 border-luxury-gold text-luxury-gold'
+                                                    : 'bg-transparent border-white/10 text-luxury-ivory/60 hover:border-white/30'
                                                     }`}
                                             >
                                                 <input
