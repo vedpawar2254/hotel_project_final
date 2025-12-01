@@ -82,7 +82,7 @@ export default function Booking() {
             }
 
         } catch (error) {
-            console.error("POST Error:", error);
+            // console.error("POST Error:", error);
             alert("Server unreachable. Try again later.");
         }
     };

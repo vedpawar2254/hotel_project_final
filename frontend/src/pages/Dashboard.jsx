@@ -32,9 +32,9 @@ const Dashboard = () => {
 
   return (
     <div className="p-10 text-white">
-      <h1 className="text-3xl mb-6 text-white">Hi {user ? user.displayName : 'Guest'}👋</h1>
-
-      {bookings.map(b => (
+      <h1 className="text-3xl mb-6 text-white">Heyy  {user ? user.displayName : 'Admin'}👋</h1>
+      <div className='grid grid-cols-4 gap-4'>
+      {bookings.slice().reverse().map(b => (
         <div key={b._id} className="border p-4 rounded mb-4">
           <h2 className="font-bold text-white text-2xl mb-4">{b.firstName} {b.lastName}</h2>
           <p>{b.email}</p>
@@ -51,6 +51,7 @@ const Dashboard = () => {
           </select>
         </div>
       ))}
+      </div>
     </div>
   );
 };

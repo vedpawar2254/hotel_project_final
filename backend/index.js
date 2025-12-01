@@ -1,72 +1,63 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 require("dotenv").config();
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const connectDB = require("./config/db");
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const userModel = require('./models/User')
+const bookingModel = require('./models/Booking')
 
-const cors = require('cors');
-const connectDB = require('./config/db');
-const bookingModel = require('./models/Booking');
-// const passport = require('passport');
-const session = require('express-session');
-// require('./config/passport');
-
-// 🔗 Connect to MongoDB
 connectDB();
 
-// middlewares
 app.use(cors({
   origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"],
+  credentials: true
 }));
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
-// Session middleware
-app.use(session({
-  secret: process.env.SESSION_SECRET || 'keyboard cat',
-  resave: false,
-  saveUninitialized: false
-}));
-
-// Passport middleware
-// app.use(passport.initialize());
-// app.use(passport.session());
-
-// Auth Routes
-// app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-// app.get('/auth/google/callback',
-//   passport.authenticate('google', { failureRedirect: '/' }),
-//   (req, res) => {
-//     // Successful authentication, redirect dashboard.
-//     res.redirect('http://localhost:5173/dashboard');
-//   }
-// );
-
-// app.get('/auth/logout', (req, res, next) => {
-//   req.logout((err) => {
-//     if (err) { return next(err); }
-//     res.redirect('/');
-//   });
-// });
-
-app.get('/auth/current_user', (req, res) => {
-  res.send(req.user);
-});
-
-// Routes
-app.use("/api/auth", require("./routes/authRoutes"));
+// routes
 app.use("/booking", require("./routes/booking"));
 
-app.get("/", (req, res) => {
-  res.send("HIEE");
+app.post("/api/auth/google", async (req, res) => {
+  try {
+    const { token } = req.body;
+
+    // Verify and decode the token
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID
+    });
+
+    const payload = ticket.getPayload();  // decoded user data from Google
+
+    console.log("Decoded Google user:", payload);
+    // payload.given_name
+    // payload.name
+
+    let user = await userModel.findOne({email: payload.email})
+    if(!user){
+      userModel.create({
+        name: payload.given_name,
+        email: payload.email
+      })
+    }
+    
+    res.json({ success: true, user: payload });
+    
+  } catch (err) {
+    console.error("❌ Google token error:", err);
+    res.status(400).json({ success: false, message: "Invalid token" });
+  }
 });
 
-app.get("/dashboard", async (req, res) => {
-  const bookings = await bookingModel.find();
-  res.json(bookings);
-});
+app.get("/dashboard" , async (req , res) => {
+  let bookings = await bookingModel.find()
+  res.json(bookings)
+})
 
 app.post("/api/bookings", async (req, res) => {
   try {
@@ -90,4 +81,4 @@ app.post("/api/bookings", async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.listen(3000, () => console.log("🚀 Server running on port 3000"));
