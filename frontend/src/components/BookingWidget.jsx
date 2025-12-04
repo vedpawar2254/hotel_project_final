@@ -91,30 +91,41 @@ const BookingWidget = () => {
                 </div>
 
                 {/* Booking Button */}
-                <button
-                    type="submit"
-                    className="flex items-center gap-2 bg-luxury-gold hover:bg-luxury-gold-light text-white px-8 py-3 rounded-lg transition-all duration-300 uppercase text-sm tracking-[0.15em] font-medium whitespace-nowrap"
-                    style={{
-                        boxShadow: '0 4px 15px rgba(200, 169, 98, 0.3)'
-                    }}
-                >
-                    <span>Booking</span>
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        className="transition-transform duration-300 group-hover:translate-x-1"
+                <div className="flex flex-col items-end gap-2">
+                    <button
+                        type="submit"
+                        disabled={!sessionStorage.getItem('googleToken')}
+                        className={`flex items-center gap-2 px-8 py-3 rounded-lg transition-all duration-300 uppercase text-sm tracking-[0.15em] font-medium whitespace-nowrap ${sessionStorage.getItem('googleToken')
+                                ? 'bg-luxury-gold hover:bg-luxury-gold-light text-white'
+                                : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+                            }`}
+                        style={sessionStorage.getItem('googleToken') ? {
+                            boxShadow: '0 4px 15px rgba(200, 169, 98, 0.3)'
+                        } : {}}
                     >
-                        <path
-                            d="M4 10H16M16 10L11 5M16 10L11 15"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                    </svg>
-                </button>
+                        <span>Booking</span>
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            className={`transition-transform duration-300 ${sessionStorage.getItem('googleToken') ? 'group-hover:translate-x-1' : ''}`}
+                        >
+                            <path
+                                d="M4 10H16M16 10L11 5M16 10L11 15"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            />
+                        </svg>
+                    </button>
+                    {!sessionStorage.getItem('googleToken') && (
+                        <p className="text-red-500 text-xs tracking-wider uppercase font-medium">
+                            sign in first
+                        </p>
+                    )}
+                </div>
             </form>
         </div>
     );
