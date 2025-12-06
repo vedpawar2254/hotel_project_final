@@ -1,32 +1,61 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-const Dashboard = ({ type }) => {
+
+const DashboardBookings = ({ type }) => {
   const [bookings, setBookings] = useState([]);
   const [user, setUser] = useState(null);
+  const token = localStorage.getItem("adminToken"); // get JWT token from login
 
   useEffect(() => {
+    const fetchBookings = async () => {
+      try {
+        const url = type === "rooms"
+          ? "http://localhost:3000/dashboard/rooms"
+          : "http://localhost:3000/dashboard/tables";
 
-    const url = type === "rooms"
-      ? "http://localhost:3000/dashboard/rooms"
-      : "http://localhost:3000/dashboard/tables";
+        const res = await fetch(url, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`, // send token
+          }
+        });
 
-    fetch(url)
-      .then(res => res.json())
-      .then(data => setBookings(data));
+        const data = await res.json();
 
-  }, [type]); // <--- Run again when type changes
+        if (!res.ok) {
+          console.error("Fetch error:", data.message || res.statusText);
+          setBookings([]); // fallback to empty array
+          return;
+        }
+
+        // ensure data is an array
+        setBookings(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("Fetch failed:", err);
+        setBookings([]);
+      }
+    };
+
+    fetchBookings();
+  }, [type, token]);
 
   const updateStatus = async (id, status) => {
-    await fetch(`http://localhost:3000/booking/update-status/${id}?type=${type === "rooms" ? "room" : "table"}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status })
-    });
+    try {
+      await fetch(`http://localhost:3000/booking/update-status/${id}?type=${type === "rooms" ? "room" : "table"}`, {
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({ status })
+      });
 
-
-    setBookings(prev =>
-      prev.map(b => b._id === id ? { ...b, status } : b)
-    );
+      setBookings(prev =>
+        prev.map(b => b._id === id ? { ...b, status } : b)
+      );
+    } catch (err) {
+      console.error("Update status failed:", err);
+    }
   };
 
   return (
@@ -37,28 +66,32 @@ const Dashboard = ({ type }) => {
       </h1>
 
       <div className="grid grid-cols-4 gap-4">
-        {bookings.slice().reverse().map(b => (
-          <div key={b._id} className="border p-4 rounded mb-4">
-            <h2 className="font-bold text-white text-2xl mb-4">
-              {b.firstName} {b.lastName}
-            </h2>
-            <p>{b.email}</p>
-            <p>Status: <b>{b.status}</b></p>
+        {bookings.length === 0 ? (
+          <p>No {type} bookings found.</p>
+        ) : (
+          bookings.slice().reverse().map(b => (
+            <div key={b._id} className="border p-4 rounded mb-4">
+              <h2 className="font-bold text-white text-2xl mb-4">
+                {b.firstName} {b.lastName}
+              </h2>
+              <p>{b.email}</p>
+              <p>Status: <b>{b.status}</b></p>
 
-            <select
-              className="bg-gray-800 p-2 rounded mt-2"
-              value={b.status}
-              onChange={(e) => updateStatus(b._id, e.target.value)}
-            >
-              <option value="hold">Hold</option>
-              <option value="confirmed">Confirm</option>
-              <option value="rejected">Reject</option>
-            </select>
-          </div>
-        ))}
+              <select
+                className="bg-gray-800 p-2 rounded mt-2"
+                value={b.status}
+                onChange={(e) => updateStatus(b._id, e.target.value)}
+              >
+                <option value="hold">Hold</option>
+                <option value="confirmed">Confirm</option>
+                <option value="rejected">Reject</option>
+              </select>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default DashboardBookings;

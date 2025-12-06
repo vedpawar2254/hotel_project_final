@@ -16,9 +16,16 @@ const adminAuth = require("./middleware/adminAuth");
 connectDB();
 
 app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
+  origin: "http://localhost:5173", // your frontend URL
+  credentials: true,
+  allowedHeaders: ["Content-Type", "Authorization"], // allow Authorization header
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"] // explicitly allow OPTIONS for preflight
 }));
+
+// app.use(cors({
+//   origin: "http://localhost:5173",
+//   credentials: true
+// }));
 
 app.set("view engine", "ejs")
 app.use(express.urlencoded({ extended: true }))
@@ -35,30 +42,25 @@ app.get("/admin/login", (req, res) => {
 
 app.post("/admin/login", (req, res) => {
   const { username, password } = req.body;
-  console.log(username , password)
 
   if (
     username === process.env.ADMIN_USERNAME &&
     password === process.env.ADMIN_PASSWORD
   ) {
-    let token = jwt.sign({ username }, process.env.SECRET_KEY, {
-      expiresIn: "1d"
+    const token = jwt.sign({ username }, process.env.SECRET_KEY, {
+      expiresIn: "1d",
     });
 
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax"
-      // Change these when hosting
-      // secure: true,
-      // sameSite: "none"
+    return res.json({
+      success: true,
+      token, // send token to frontend
     });
-
-    // return res.json({ success: true });
-    return res.redirect("http://localhost:5173/dashboard")
   }
 
   res.status(401).json({ message: "Invalid username or password" });
 });
+
+
 
 
 app.get("/dashboard", adminAuth , async (req, res) => {

@@ -55,6 +55,7 @@ export default function RoomBookingForm() {
         try {
             const response = await fetch("http://localhost:3000/api/bookings", {
                 method: "POST",
+                credentials: "include",
                 headers: {
                     "Content-Type": "application/json",
                 },

@@ -12,42 +12,61 @@ import ConfirmationPage from './pages/Confirmation';
 import DashboardBookings from './pages/DashboardBookings';
 import Dashboard from './pages/Dashboard';
 import BookingHistory from './pages/BookingHistory';
-
+import AdminLogin from './pages/AdminLogin';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
-    <Router>
+     <Router>
       <SmoothScroll />
       <div className="App">
         <Routes>
-          {/* Home/Overview Route */}
+          {/* Public Routes */}
           <Route path="/" element={<OverviewPage />} />
           <Route path="/overview" element={<OverviewPage />} />
-
-          {/* Booking Route */}
           <Route path="/booking" element={<Booking />} />
           <Route path="/confirmation" element={<ConfirmationPage />} />
-
-          {/* Accommodations Route */}
           <Route path="/accommodations" element={<AccommodationsPage />} />
-
-          {/* Offers Route */}
           <Route path="/offers" element={<OffersPage />} />
-
-          {/* Experiences Route */}
           <Route path="/experiences" element={<ExperiencesPage />} />
-
-          {/* Dining Routes */}
           <Route path="/dining" element={<DiningPage />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
 
-          {/* DashboardBookings */}
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/dashboard/rooms" element={<DashboardBookings type="rooms" />} />
-          <Route path="/dashboard/tables" element={<DashboardBookings type="tables" />} />
-          <Route path="/dashboard/booking-history" element={<BookingHistory />} />
+          {/* Protected Dashboard Routes */}
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/rooms" 
+            element={
+              <ProtectedRoute>
+                <DashboardBookings type="rooms" />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/tables" 
+            element={
+              <ProtectedRoute>
+                <DashboardBookings type="tables" />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dashboard/booking-history" 
+            element={
+              <ProtectedRoute>
+                <BookingHistory />
+              </ProtectedRoute>
+            } 
+          />
 
-
-          {/* 404 Not Found Route */}
+          {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

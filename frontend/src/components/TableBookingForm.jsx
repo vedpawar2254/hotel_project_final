@@ -28,13 +28,17 @@ export default function TableBookingForm() {
 
         try {
             // Note: Adjust endpoint if needed for table bookings
-            const response = await fetch("http://localhost:3000/api/table-booking", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ ...formData, type: 'table' }), // Adding type to distinguish
-            });
+            const token = localStorage.getItem("adminToken"); // or sessionStorage if you use googleToken
+
+const response = await fetch("http://localhost:3000/api/table-booking", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // <- send JWT
+    },
+    body: JSON.stringify({ ...formData, type: 'table' }),
+});
+
 
             const data = await response.json();
 
