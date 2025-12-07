@@ -18,7 +18,7 @@ connectDB();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://hotelprojectfinal.vercel.app"
+  "https://hotelprojectfinal.vercel.app",
 ];
 
 app.use(cors({
