@@ -19,6 +19,7 @@ connectDB();
 const allowedOrigins = [
   "http://localhost:5173",
   "https://hotelprojectfinal.vercel.app",
+  "https://hotel-project-final-murex.vercel.app/"
 ];
 
 app.use(cors({
