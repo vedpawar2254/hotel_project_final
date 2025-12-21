@@ -9,26 +9,36 @@ const Login = () => {
 
   // Google login button
 const handleSuccess = async (credentialResponse) => {
-  const token = credentialResponse.credential;
-  const user = jwtDecode(token);
+  try {
+    const credential = credentialResponse.credential;
+    const user = jwtDecode(credential);
 
-  // 1️⃣ Save to sessionStorage FIRST
-  sessionStorage.setItem("googleToken", token);
-  sessionStorage.setItem("userName", user.given_name);
+    sessionStorage.setItem("googleToken", credential);
+    sessionStorage.setItem("userName", user.given_name);
 
-  console.log("Stored userName:", sessionStorage.getItem("userName"));
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/auth/google`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ credential }), // ✅ correct key
+      }
+    );
 
-  // 2️⃣ Send token to backend (wait until it finishes)
-  await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/google`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ token })
-  });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text);
+    }
 
-  // 3️⃣ Reload AFTER everything is done
-  setTimeout(() => {
+    const data = await res.json();
+    console.log("Backend auth success:", data);
+
+    // Reload ONLY after success
     window.location.reload();
-  }, 50);  // tiny delay makes sure sessionStorage is written before reload
+
+  } catch (err) {
+    console.error("Google login failed:", err);
+  }
 };
 
 
