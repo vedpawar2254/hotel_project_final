@@ -16,24 +16,27 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://hotelprojectfinal.vercel.app",
-  "https://hotel-project-final-murex.vercel.app/"
-];
-
-app.use(cors({
+const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
+    if (!origin) return callback(null, true);
+
+    if (
+      origin === "http://localhost:5173" ||
+      origin === "https://hotel-project-final-murex.vercel.app"
+    ) {
+      return callback(null, true);
     }
+
+    return callback(null, false);
   },
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
-}));
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
+
 
 
 // app.use(cors({
