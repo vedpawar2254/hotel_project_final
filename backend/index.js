@@ -72,14 +72,16 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.json());
 app.use(cookieParser());
 
-// routes
-app.use("/booking", require("./routes/booking"));
-
+// Admin login routes - define before other routes
 app.get("/admin/login", (req, res) => {
-  res.render("login")
-})
+  console.log('GET /admin/login requested');
+  res.render("login");
+});
 
 app.post("/admin/login", (req, res) => {
+  console.log('POST /admin/login requested');
+  console.log('Request body:', req.body);
+  
   const { username, password } = req.body;
 
   if (
@@ -98,6 +100,9 @@ app.post("/admin/login", (req, res) => {
 
   res.status(401).json({ message: "Invalid username or password" });
 });
+
+// routes
+app.use("/booking", require("./routes/booking"));
 
 
 app.post("/api/auth/google", async (req, res) => {
@@ -230,7 +235,37 @@ app.get('/api/test-cors', (req, res) => {
   });
 });
 
+// 404 handler for debugging
+app.use((req, res, next) => {
+  console.log('404 - Route not found:', req.method, req.path);
+  res.status(404).json({ 
+    error: 'Route not found',
+    method: req.method,
+    path: req.path,
+    availableRoutes: [
+      'GET /admin/login',
+      'POST /admin/login',
+      'POST /api/auth/google',
+      'GET /dashboard',
+      'GET /dashboard/rooms',
+      'GET /dashboard/tables',
+      'POST /api/bookings',
+      'POST /api/table-booking',
+      'GET /api/test-cors'
+    ]
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log('Allowed origins:', allowedOrigins);
+  console.log('Available routes:');
+  console.log('  GET  /admin/login');
+  console.log('  POST /admin/login');
+  console.log('  POST /api/auth/google');
+  console.log('  GET  /dashboard');
+  console.log('  GET  /dashboard/rooms');
+  console.log('  GET  /dashboard/tables');
+  console.log('  POST /api/bookings');
+  console.log('  POST /api/table-booking');
 });
