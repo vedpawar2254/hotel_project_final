@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 const { OAuth2Client } = require("google-auth-library");
@@ -16,20 +15,52 @@ const PORT = process.env.PORT || 5000;
 
 connectDB();
 
-
-
 const allowedOrigins = [
-  "http://localhost:5173",
+  process.env.FRONTEND_URL || "http://localhost:5173",
   "https://hotel-project-final-murex.vercel.app",
 ];
 
+// Manual CORS middleware - MUST be FIRST, before ANY other middleware
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-
-  if (origin && !allowedOrigins.includes(origin)) {
-    return res.status(403).send("Forbidden");
+  
+  // Log all requests for debugging
+  console.log('Request:', req.method, req.path, 'Origin:', origin);
+  console.log('Allowed origins:', allowedOrigins);
+  
+  // Check if origin is allowed
+  if (origin && allowedOrigins.includes(origin)) {
+    // Set CORS headers for allowed origins
+    // Use both setHeader and header to ensure compatibility
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    res.setHeader('Access-Control-Expose-Headers', 'Content-Type, Authorization');
+    
+    // Also set using Express header() method
+    res.header('Access-Control-Allow-Origin', origin);
+    res.header('Access-Control-Allow-Credentials', 'true');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+    
+    // Handle preflight OPTIONS requests
+    if (req.method === 'OPTIONS') {
+      res.setHeader('Access-Control-Max-Age', '86400'); // 24 hours
+      res.header('Access-Control-Max-Age', '86400');
+      console.log('Preflight OPTIONS request handled for origin:', origin);
+      console.log('Response headers:', res.getHeaders());
+      return res.status(200).end();
+    }
+    
+    console.log('CORS headers set for origin:', origin);
+    console.log('Response headers:', res.getHeaders());
+  } else if (origin) {
+    // Log blocked origins for debugging
+    console.log('CORS blocked origin:', origin);
+    console.log('Origin in allowed list?', allowedOrigins.includes(origin));
   }
-
+  
   next();
 });
 
@@ -51,14 +82,16 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use(express.json());
 app.use(cookieParser());
 
-// routes
-app.use("/booking", require("./routes/booking"));
-
+// Admin login routes - define before other routes
 app.get("/admin/login", (req, res) => {
-  res.render("login")
-})
+  console.log('GET /admin/login requested');
+  res.render("login");
+});
 
 app.post("/admin/login", (req, res) => {
+  console.log('POST /admin/login requested');
+  console.log('Request body:', req.body);
+  
   const { username, password } = req.body;
 
   if (
@@ -77,6 +110,9 @@ app.post("/admin/login", (req, res) => {
 
   res.status(401).json({ message: "Invalid username or password" });
 });
+
+// routes
+app.use("/booking", require("./routes/booking"));
 
 
 app.post("/api/auth/google", async (req, res) => {
@@ -200,4 +236,46 @@ app.post("/api/table-booking", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Test endpoint to verify CORS
+app.get('/api/test-cors', (req, res) => {
+  res.json({ 
+    message: 'CORS test successful',
+    origin: req.headers.origin,
+    allowedOrigins: allowedOrigins
+  });
+});
+
+// 404 handler for debugging
+app.use((req, res, next) => {
+  console.log('404 - Route not found:', req.method, req.path);
+  res.status(404).json({ 
+    error: 'Route not found',
+    method: req.method,
+    path: req.path,
+    availableRoutes: [
+      'GET /admin/login',
+      'POST /admin/login',
+      'POST /api/auth/google',
+      'GET /dashboard',
+      'GET /dashboard/rooms',
+      'GET /dashboard/tables',
+      'POST /api/bookings',
+      'POST /api/table-booking',
+      'GET /api/test-cors'
+    ]
+  });
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  console.log('Allowed origins:', allowedOrigins);
+  console.log('Available routes:');
+  console.log('  GET  /admin/login');
+  console.log('  POST /admin/login');
+  console.log('  POST /api/auth/google');
+  console.log('  GET  /dashboard');
+  console.log('  GET  /dashboard/rooms');
+  console.log('  GET  /dashboard/tables');
+  console.log('  POST /api/bookings');
+  console.log('  POST /api/table-booking');
+});

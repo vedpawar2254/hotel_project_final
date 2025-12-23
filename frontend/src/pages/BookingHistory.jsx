@@ -8,7 +8,8 @@ const BookingHistory = () => {
   const token = localStorage.getItem("adminToken"); // get token
 
   useEffect(() => {
-    fetch("http://localhost:3000/dashboard/rooms", {
+    const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+    fetch(`${baseUrl}/dashboard/rooms`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -20,7 +21,8 @@ const BookingHistory = () => {
   }, [token]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/dashboard/tables", {
+    const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+    fetch(`${baseUrl}/dashboard/tables`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
