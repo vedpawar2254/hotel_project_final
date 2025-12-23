@@ -9,9 +9,10 @@ const DashboardBookings = ({ type }) => {
   useEffect(() => {
     const fetchBookings = async () => {
       try {
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
         const url = type === "rooms"
-          ? "http://localhost:3000/dashboard/rooms"
-          : "http://localhost:3000/dashboard/tables";
+          ? `${baseUrl}/dashboard/rooms`
+          : `${baseUrl}/dashboard/tables`;
 
         const res = await fetch(url, {
           headers: {
@@ -41,7 +42,8 @@ const DashboardBookings = ({ type }) => {
 
   const updateStatus = async (id, status) => {
     try {
-      await fetch(`http://localhost:3000/booking/update-status/${id}?type=${type === "rooms" ? "room" : "table"}`, {
+      const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+      await fetch(`${baseUrl}/booking/update-status/${id}?type=${type === "rooms" ? "room" : "table"}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",

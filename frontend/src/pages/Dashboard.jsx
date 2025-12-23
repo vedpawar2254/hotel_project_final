@@ -9,8 +9,9 @@ const Dashboard = () => {
     // Fetch rooms
     useEffect(() => {
         const token = localStorage.getItem("adminToken");
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
-        fetch("http://localhost:3000/dashboard/rooms", {
+        fetch(`${baseUrl}/dashboard/rooms`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
@@ -24,8 +25,9 @@ const Dashboard = () => {
     // Fetch tables
     useEffect(() => {
         const token = localStorage.getItem("adminToken");
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
-        fetch("http://localhost:3000/dashboard/tables", {
+        fetch(`${baseUrl}/dashboard/tables`, {
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json",
