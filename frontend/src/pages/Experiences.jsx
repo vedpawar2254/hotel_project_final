@@ -4,18 +4,13 @@ import Navbar from '../components/Navbar';
 export default function Experiences() {
   const experiences = [
     {
-      title: 'Heritage Walk',
-      desc: 'Explore the historic charm of the city with our guided heritage walks.',
+      title: 'Rooftop cafe experience',
+      desc: 'enjoy the warm and cozy evening with your friends at rooftop cafe for a memorable hangout',
       image: '/hero-rooftop.jpg'
     },
     {
-      title: 'Spa Rejuvenation',
-      desc: 'Indulge in ancient Indian wellness therapies at our award-winning spa.',
-      image: '/inroom.jpg'
-    },
-    {
-      title: 'Culinary Masterclass',
-      desc: 'Learn the secrets of royal Indian cuisine from our master chefs.',
+      title: 'Book your table now',
+      desc: 'Reserve your spot for an unforgettable dining experience.',
       image: '/sanqi.jpg'
     }
   ];
@@ -48,9 +43,9 @@ export default function Experiences() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-12">
           {experiences.map((exp, idx) => (
-            <div key={idx} className="bg-gray-50 pb-8 group hover:shadow-xl transition-shadow duration-300">
+            <div key={idx} className="bg-gray-50 pb-8 group hover:shadow-xl transition-shadow duration-300 w-full md:w-[45%] lg:w-[30%]">
               <div className="h-64 overflow-hidden mb-6">
                 <img
                   src={exp.image}

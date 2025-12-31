@@ -41,17 +41,20 @@ export default function LocationPage() {
                                 <div className="flex items-start gap-4">
                                     <span className="text-luxury-gold uppercase text-xs tracking-widest mt-1">Address</span>
                                     <p className="text-white/80 font-light">
-                                        The Hollywood<br />
-                                        Restaurant & Rooms<br />
-                                        Morinda Road, Bari Mandauli,<br />
-                                        Distt Ropar Punjab 140101
+                                        A Unit of : Jmaan Ventures<br />
+                                        Showroom 16 to 19<br />
+                                        Near Prime Enclave<br />
+                                        Kurali Road Morinda<br />
+                                        Distt Rupnagar<br />
+                                        140101 Punjab<br />
+                                        ( 35 Km From Chandigarh)
                                     </p>
                                 </div>
                                 <div className="flex items-start gap-4">
                                     <span className="text-luxury-gold uppercase text-xs tracking-widest mt-1">Contact</span>
                                     <p className="text-white/80 font-light">
-                                        +91 (22) 6982 8000<br />
-                                        reservations@thehollywood.com
+                                        +91 70877 14491<br />
+                                        hollywoodmorinda@gmail.com
                                     </p>
                                 </div>
                             </div>
