@@ -3,16 +3,15 @@ import Navbar from '../components/Navbar';
 
 export default function Offers() {
   const offers = [
-
     {
-      title: 'Member Exclusive',
-      desc: 'Join our loyalty program and enjoy exclusive benefits and rates.',
-      validity: 'Ongoing'
+      title: 'Weekday Special',
+      desc: 'Enjoy Monday to Thursday 20% discount on foods and one plus one soft and hard drinks (Conditions Apply)',
+      validity: 'Monday - Thursday'
     },
     {
-      title: 'Advance Purchase',
-      desc: 'Book 14 days in advance and save 15% on your stay.',
-      validity: 'Round the Year'
+      title: 'Membership Plan',
+      desc: 'Membership card in plan so fill form at counter in advance.',
+      validity: 'Ongoing'
     }
   ];
 

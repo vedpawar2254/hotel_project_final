@@ -83,7 +83,7 @@ export default function Overview() {
             {/* Parallax Hero Section with Booking Widget */}
             <ParallaxHero
               backgroundImage="/hero-rooftop.jpg"
-              title="Explore The Hollywood"
+              title={<>Explore<br />The Hollywood</>}
               subtitle="Where skyline whispers meet curated cocktails. Punjab's elevated escape."
             >
               <BookingWidget />

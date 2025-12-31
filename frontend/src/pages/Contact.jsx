@@ -29,16 +29,16 @@ export default function Contact() {
                     {/* Reservations */}
                     <div className="border-t border-white/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <h2 className="text-xs tracking-[0.2em] uppercase font-medium text-white/80">Reservations</h2>
-                        <a href="tel:+912269828000" className="text-right text-sm md:text-base text-white/60 font-light tracking-widest hover:text-luxury-gold transition-colors">
-                            +91 (22) 6982 8000
+                        <a href="tel:+917087714491" className="text-right text-sm md:text-base text-white/60 font-light tracking-widest hover:text-luxury-gold transition-colors">
+                            +91 70877 14491
                         </a>
                     </div>
 
                     {/* Front Desk */}
                     <div className="border-t border-white/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <h2 className="text-xs tracking-[0.2em] uppercase font-medium text-white/80">Front Desk</h2>
-                        <a href="tel:+912269828000" className="text-right text-sm md:text-base text-white/60 font-light tracking-widest hover:text-luxury-gold transition-colors">
-                            +91 (22) 6982 8000
+                        <a href="tel:+917087714491" className="text-right text-sm md:text-base text-white/60 font-light tracking-widest hover:text-luxury-gold transition-colors">
+                            +91 70877 14491
                         </a>
                     </div>
 
@@ -46,7 +46,7 @@ export default function Contact() {
                     <div className="border-t border-b border-white/20 py-12 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                         <h2 className="text-xs tracking-[0.2em] uppercase font-medium text-white/80">Guest Fax</h2>
                         <span className="text-right text-sm md:text-base text-white/60 font-light tracking-widest">
-                            +91 (22) 6982 8000
+                            +91 70877 14491
                         </span>
                     </div>
                 </div>
